@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
     steps:
@@ -32,14 +31,14 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               CLUSTER='demo-nodejs-app-cluster'
               FAMILY='sample-app'
-              DOCKER_IMAGE='test-app'
+              DOCKER_IMAGE='sample-nodejs-app'
               TASK='sample-app'
               SERVICE='demo-nodejs-app-service'
               # Login to AWS
               aws configure set region $AWS_REGION
               $(aws ecr get-login)
               # Tag and push docker image
-              docker tag app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_IMAGE:$CIRCLE_SHA1
+              docker tag sample-nodejs-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_IMAGE:$CIRCLE_SHA1
               docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_IMAGE:$CIRCLE_SHA1
               # Create task for docker deploy
               task_template='[
