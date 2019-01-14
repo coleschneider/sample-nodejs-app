@@ -43,6 +43,7 @@ jobs:
               # Create task for docker deploy
               task_template='[
                 {
+                  "containerName": "sample-app",
                   "name": "%s",
                   "image": "%s.dkr.ecr.%s.amazonaws.com/%s:%s",
                   "essential": true,
